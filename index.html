@@ -3,46 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AP Calculus AB | 45-Question Mock Exam</title>
+    <title>AP Calculus AB | Section I Simulation</title>
     <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;600&family=Inter:wght@400;500;700&display=swap');
-        body { font-family: 'Inter', sans-serif; background-color: #f1f5f9; color: #0f172a; }
-        .math-text { font-family: 'Crimson Pro', serif; font-size: 1.25rem; }
-        .glass-panel { background: white; border: 1px solid #e2e8f0; box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1); }
-        .option-btn { border: 2px solid #e2e8f0; transition: 0.2s; text-align: left; padding: 1rem; border-radius: 0.75rem; width: 100%; display: flex; align-items: center; }
-        .option-btn:hover:not(:disabled) { border-color: #3b82f6; background: #eff6ff; }
+        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; color: #0f172a; }
+        .math-text { font-family: 'Crimson Pro', serif; font-size: 1.3rem; }
+        .glass { background: white; border: 1px solid #e2e8f0; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+        .opt-btn { border: 2px solid #e2e8f0; transition: 0.2s; text-align: left; padding: 1.25rem; border-radius: 0.75rem; width: 100%; display: flex; align-items: center; }
+        .opt-btn:hover:not(:disabled) { border-color: #2563eb; background: #f8faff; }
         .correct { border-color: #22c55e !important; background: #f0fdf4 !important; color: #166534; font-weight: 600; }
         .incorrect { border-color: #ef4444 !important; background: #fef2f2 !important; color: #991b1b; }
-        table { width: 100%; border-collapse: collapse; margin: 1rem 0; }
-        th, td { border: 1px solid #cbd5e1; padding: 8px; text-align: center; }
+        table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; background: #fff; }
+        th, td { border: 1px solid #cbd5e1; padding: 10px; text-align: center; }
     </style>
 </head>
-<body class="min-h-screen pb-20">
+<body class="min-h-screen pb-20 bg-slate-50">
 
     <nav class="bg-white border-b border-slate-200 py-4 px-6 mb-8 sticky top-0 z-50">
         <div class="max-w-4xl mx-auto flex justify-between items-center">
-            <span class="font-bold text-slate-800 tracking-tight text-lg">AP CALC <span class="text-blue-600">AB</span> 45 MCQs</span>
-            <div id="progress-text" class="text-xs font-bold text-slate-500 uppercase tracking-widest">Question 1 / 45</div>
+            <span class="font-bold text-slate-800 text-lg tracking-tight">AP CALCULUS <span class="text-blue-600">AB</span></span>
+            <div id="nav-info" class="text-xs font-bold text-slate-500 uppercase tracking-widest">Question 1 of 20</div>
         </div>
     </nav>
 
     <main class="max-w-3xl mx-auto px-4">
-        <div class="glass-panel rounded-2xl p-6 md:p-10">
-            <div id="question-content" class="math-text mb-8 leading-relaxed"></div>
-            <div id="options-stack" class="space-y-3 mb-8"></div>
-
+        <div class="glass rounded-2xl p-8 md:p-12">
+            <div id="q-text" class="math-text mb-10 leading-relaxed text-slate-800"></div>
+            <div id="options-stack" class="space-y-4 mb-10"></div>
             <div id="feedback-box" class="hidden rounded-xl p-6 mb-8 border-l-4">
-                <h4 id="feedback-status" class="font-bold uppercase text-xs tracking-widest mb-1"></h4>
-                <div id="explanation-text" class="text-sm leading-relaxed"></div>
+                <h4 id="status" class="font-bold uppercase text-xs tracking-widest mb-1"></h4>
+                <div id="explanation" class="text-sm leading-relaxed text-slate-700"></div>
             </div>
-
-            <div class="flex justify-between items-center pt-6 border-t border-slate-100">
-                <button id="prev-btn" class="text-slate-400 font-semibold hover:text-slate-700 disabled:opacity-0 transition">← Previous</button>
-                <div id="score-pill" class="bg-slate-100 px-4 py-1 rounded-full text-xs font-bold text-slate-600">Score: 0/45</div>
-                <button id="next-btn" class="bg-blue-600 text-white px-6 py-2 rounded-lg font-bold hover:bg-blue-700 transition shadow-md">Next →</button>
+            <div class="flex justify-between items-center pt-8 border-t border-slate-100">
+                <button id="prev" class="text-slate-400 font-semibold hover:text-slate-700 disabled:opacity-0 transition">← Previous</button>
+                <div id="score" class="text-xs font-bold text-slate-400 uppercase tracking-widest">Score: 0/20</div>
+                <button id="next" class="bg-blue-600 text-white px-8 py-3 rounded-xl font-bold hover:bg-blue-700 transition shadow-lg shadow-blue-200">Next →</button>
             </div>
         </div>
     </main>
@@ -50,121 +48,264 @@
     <script>
         const questionData = [
             {
-                q: "A particle moves along the x-axis so that its position at time \\( t \\geq 0 \\) is given by \\( s(t) = t^3 - 6t^2 + 9t + 1 \\). At what time \\( t \\) does the particle change direction?",
+                q: "Find \\( \\lim_{x \\to 0} \\frac{\\sqrt{x+4}-2}{x} \\).",
                 options: [
-                    { text: "\\( t = 1 \\text{ and } t = 3 \\)", note: "Correct: Velocity \\( v(t) = 3t^2 - 12t + 9 = 3(t-1)(t-3) \\). The sign of \\( v(t) \\) changes at both \\( t=1 \\) and \\( t=3 \\)." },
-                    { text: "\\( t = 2 \\) only", note: "Common Trap: This is where acceleration is zero (the inflection point of position), not where direction changes." },
-                    { text: "\\( t = 1 \\) only", note: "Common Trap: You found one root but missed the second time the velocity crosses zero." },
-                    { text: "\\( t = 3 \\) only", note: "Common Trap: You found one root but missed the first time the velocity crosses zero." }
+                    { text: "1/4", note: "Correct: Rationalize the numerator. Multiply by \\( \\frac{\\sqrt{x+4}+2}{\\sqrt{x+4}+2} \\) to get \\( \\frac{x}{x(\\sqrt{x+4}+2)} \\). Evaluating as \\( x \\to 0 \\) gives \\( 1/4 \\)." },
+                    { text: "0", note: "Trap: You likely saw the numerator approach 0 but didn't resolve the indeterminate 0/0 form." },
+                    { text: "1/2", note: "Trap: Common calculation error when evaluating the square root in the denominator." },
+                    { text: "Does not exist", note: "Trap: The limit is indeterminate 0/0, but it is removable through rationalization." }
                 ],
                 correct: 0
             },
             {
-                q: "The volume of a sphere is increasing at a rate of \\( 12\pi \\) cubic centimeters per second. At the instant when the radius of the sphere is 3 cm, what is the rate of change of the radius?",
+                q: "If \\( f(x) = e^{2x} \\sin(x) \\), then \\( f'(0) = \\)?",
                 options: [
-                    { text: "\\( 1/3 \\text{ cm/sec} \\)", note: "Correct: \\( V = \\frac{4}{3}\\pi r^3 \\Rightarrow \\frac{dV}{dt} = 4\\pi r^2 \\frac{dr}{dt} \\). Plug in \\( 12\pi = 4\\pi(3^2)\\frac{dr}{dt} \\) to get \\( 12/36 = 1/3 \\)." },
-                    { text: "\\( 1 \\text{ cm/sec} \\)", note: "Common Trap: You likely used the formula for surface area or forgot to square the radius." },
-                    { text: "\\( 3\pi \\text{ cm/sec} \\)", note: "Common Trap: You likely multiplied by \\( \pi \\) again instead of dividing it out." },
-                    { text: "\\( 4\pi \\text{ cm/sec} \\)", note: "Common Trap: Calculation error in the related rates setup." }
+                    { text: "1", note: "Correct: By product rule, \\( f'(x) = 2e^{2x}\\sin(x) + e^{2x}\\cos(x) \\). At \\( x=0 \\), \\( f'(0) = 0 + 1(1) = 1 \\)." },
+                    { text: "0", note: "Trap: You likely substituted 0 into sine and assumed the whole product was zero." },
+                    { text: "2", note: "Trap: You likely found the derivative of the exponential part but forgot to evaluate the full product rule." },
+                    { text: "e", note: "Trap: Conceptual error regarding the derivative of sine or exponential functions." }
                 ],
-                correct: 0
+                correct: 2
             },
             {
-                q: "If \\( f(x) = \\ln(x^2 + 1) \\), then \\( f''(1) = \\)?",
+                q: "A particle moves with position \\( s(t) = t^3 - 9t^2 + 24t \\). On what interval is the particle moving to the left?",
                 options: [
-                    { text: "1", note: "Common Trap: You found the first derivative \\( f'(1) \\) but did not take the second derivative." },
-                    { text: "0", note: "Correct: \\( f'(x) = \\frac{2x}{x^2+1} \\). Using quotient rule: \\( f''(x) = \\frac{2(x^2+1) - 2x(2x)}{(x^2+1)^2} = \\frac{2-2x^2}{(x^2+1)^2} \\). At \\( x=1 \\), \\( f''(1) = 0 \\)." },
-                    { text: "1/2", note: "Common Trap: Calculation error in the quotient rule application." },
-                    { text: "-1", note: "Common Trap: Sign error in the numerator of the second derivative." }
+                    { text: "\\( (0, 2) \\)", note: "Trap: You found where the particle is moving to the right." },
+                    { text: "\\( (2, 4) \\)", note: "Correct: Velocity \\( v(t) = 3t^2 - 18t + 24 = 3(t-2)(t-4) \\). The velocity is negative between \\( t=2 \\) and \\( t=4 \\)." },
+                    { text: "\\( t > 3 \\)", note: "Trap: This is where the acceleration is positive, not the velocity." },
+                    { text: "\\( t > 4 \\)", note: "Trap: This is where the particle starts moving to the right again." }
                 ],
                 correct: 1
             },
             {
-                q: "Which of the following is the solution to the differential equation \\( \\frac{dy}{dx} = \\frac{x}{y} \\) with the initial condition \\( y(0) = 2 \\)?",
+                q: "The table below shows values for differentiable functions \\( f \\) and \\( g \\).<br><table><tr><th>x</th><th>f(x)</th><th>f'(x)</th><th>g(x)</th><th>g'(x)</th></tr><tr><td>1</td><td>2</td><td>-3</td><td>1</td><td>2</td></tr></table>If \\( h(x) = f(g(x)) \\), find \\( h'(1) \\).",
                 options: [
-                    { text: "\\( y = \\sqrt{x^2 + 4} \\)", note: "Correct: \\( y dy = x dx \\Rightarrow \\frac{1}{2}y^2 = \\frac{1}{2}x^2 + C \\). Using (0,2), \\( 2 = 0 + C \\), so \\( C=2 \\). \\( y^2 = x^2 + 4 \\)." },
-                    { text: "\\( y = x + 2 \\)", note: "Common Trap: You likely treated the derivative as a constant instead of a separable equation." },
-                    { text: "\\( y = e^{x^2/2} + 1 \\)", note: "Common Trap: You attempted to use exponential integration where it was not applicable." },
-                    { text: "\\( y = \\sqrt{x^2 + 2} \\)", note: "Common Trap: You failed to multiply the constant \\( C \\) by 2 when solving for \\( y^2 \\)." }
+                    { text: "-3", note: "Trap: You likely forgot to multiply by the inner derivative \\( g'(1) \\)." },
+                    { text: "4", note: "Trap: You likely evaluated the derivative at the wrong table entry." },
+                    { text: "2", note: "Trap: Conceptual error in applying the chain rule." },
+                    { text: "-6", note: "Correct: \\( h'(1) = f'(g(1)) \\cdot g'(1) = f'(1) \\cdot 2 = (-3)(2) = -6 \\)." }
+                ],
+                correct: 3
+            },
+            {
+                q: "Find \\( \\frac{dy}{dx} \\) for \\( x^2 + y^2 = xy + 7 \\) at the point \\( (3, 2) \\).",
+                options: [
+                    { text: "1/4", note: "Trap: \\( 2x + 2yy' = y + xy' \\). shit youre cooked" },
+                    { text: "-4", note: "Correct: Rearranging \\( 2x - y = y'(x - 2y) \\) gives \\( y' = (2x-y)/(x-2y) = (6-2)/(3-4) = -4 \\)." },
+                    { text: "4", note: "Trap: Sign error when isolating \\( y' \\)." },
+                    { text: "2/3", note: "Trap: Failed to use implicit differentiation correctly." }
+                ],
+                correct: 1
+            },
+            {
+                q: "The radius of a circle is increasing at 3 cm/s. Find the rate of change of the Area when \\( r = 5 \\) cm.",
+                options: [
+                    { text: "\\( 30\\pi \\) cm²/s", note: "Correct: \\( A = \\pi r^2 \\Rightarrow dA/dt = 2\\pi r (dr/dt) = 2\\pi(5)(3) = 30\\pi \\)." },
+                    { text: "\\( 15\\pi \\) cm²/s", note: "Trap: You forgot the factor of 2 from the power rule for \\( r^2 \\)." },
+                    { text: "\\( 9\\pi \\) cm²/s", note: "Trap: You likely used the formula for circumference or squared the rate." },
+                    { text: "3 cm²/s", note: "Trap: You assumed the rates of change were identical." }
                 ],
                 correct: 0
+            },
+            {
+                q: "If \\( f(x) = \\int_{1}^{x^2} \\frac{1}{1+t^3} dt \\), then \\( f'(x) = \\)?",
+                options: [
+                    { text: "\\( \\frac{1}{1+x^6} \\)", note: "Trap: You forgot the chain rule for the upper limit \\( x^2 \\)." },
+                    { text: "\\( \\frac{2x}{1+x^6} \\)", note: "Correct: By FTC and Chain Rule, substitute \\( x^2 \\) for \\( t \\) and multiply by \\( 2x \\). \\( (x^2)^3 = x^6 \\)." },                   
+                    { text: "\\( \\frac{1}{1+x^3} \\)", note: "Trap: You substituted \\( x \\) instead of \\( x^2 \\)." },
+                    { text: "\\( \\frac{2x}{1+x^2} \\)", note: "Trap: Algebraic error in substituting into the function denominator." }
+                ],
+                correct: 1
+            },
+            {
+                q: "What is the average value of \\( f(x) = \cos(x) \\) on the interval \\( [0, \pi/2] \\)?",
+                options: [
+                    { text: "\\( 2/\pi \\)", note: "Correct: \\( \frac{1}{\pi/2 - 0} \int_{0}^{\pi/2} \cos(x) dx = \frac{2}{\pi} [\sin(x)]_{0}^{\pi/2} = \frac{2}{\pi}(1) \\)." },
+                    { text: "1", note: "Trap: You found the definite integral but forgot to divide by the interval width." },
+                    { text: "\\( \pi/2 \\)", note: "Trap: Inverted the interval width coefficient." },
+                    { text: "0", note: "Trap: Conceptual error in integration or interval limits." }
+                ],
+                correct: 0
+            },
+            {
+                q: "A function \\( f \\) is continuous on \\( [0, 6] \\). Use a Right Riemann sum with 3 subintervals of equal width to approximate \\( \int_{0}^{6} f(x) dx \\) given \\( f(2)=5, f(4)=2, f(6)=1 \\).",
+                options: [
+                    { text: "16", note: "Correct: \\( \Delta x = 2 \\). Sum = \\( f(2)(2) + f(4)(2) + f(6)(2) = 10 + 4 + 2 = 16 \\)." },
+                    { text: "8", note: "Trap: You forgot to multiply the function values by the width of the subintervals." },
+                    { text: "24", note: "Trap: You used a Left Riemann sum or midpoint sum incorrectly." },
+                    { text: "12", note: "Trap: Calculation error in the summation." }
+                ],
+                correct: 0
+            },
+            {
+                q: "Find the solution to the differential equation \\( \frac{dy}{dx} = 2xy \\) with initial condition \\( y(0) = 3 \\).",
+                options: [
+                    { text: "\\( y = x^2 + 3 \\)", note: "Trap: You treated the derivative as additive rather than separable/exponential." },
+                    { text: "\\( y = e^{x^2} + 2 \\)", note: "Trap: Improperly solved for the constant of integration." },
+                    { text: "\\( y = 3e^{x^2} \\)", note: "Correct: \\( \int \frac{1}{y} dy = \int 2x dx \Rightarrow \ln|y| = x^2 + C \Rightarrow y = Ce^{x^2} \\). At (0,3), \\( C=3 \\)." },
+
+                    { text: "\\( y = 3e^{2x} \\)", note: "Trap: Failed to integrate \\( 2x \\) correctly." }
+                ],
+                correct: 2
+            },
+            {
+                q: "On what interval is the graph of \\( f(x) = x^3 - 6x^2 + 9x \\) concave down?",
+                options: [
+                    { text: "\\( x > 2 \\)", note: "Trap: You found where the graph is concave up." },
+                    { text: "\\( x < 1 \\)", note: "Trap: You likely used a root of the first derivative (increasing/decreasing) instead of the second." },
+                    { text: "Always", note: "Trap: Conceptual error regarding polynomial concavity." },
+                    { text: "\\( x < 2 \\)", note: "Correct: \\( f'(x) = 3x^2 - 12x + 9 \\), \\( f''(x) = 6x - 12 \\). Concave down where \\( 6x - 12 < 0 \\), so \\( x < 2 \\)." }
+
+                ],
+                correct: 3
+            },
+            {
+                q: "The volume of a solid generated by revolving the region bounded by \\( y = x^2 \\) and \\( y = 4 \\) about the x-axis is given by:",
+                options: [
+                    { text: "\\( \pi \int_{-2}^{2} (16 - x^4) dx \\)", note: "Correct: Use the washer method: \\( \pi \int [R(x)^2 - r(x)^2] dx \\), where \\( R=4 \\) and \\( r=x^2 \\)." },
+                    { text: "\\( \pi \int_{-2}^{2} (4 - x^2)^2 dx \\)", note: "Trap: You subtracted the functions before squaring them (incorrect washer method)." },
+                    { text: "\\( 2\pi \int_{0}^{2} (x^4) dx \\)", note: "Trap: Disc method error; you revolved the wrong region." },
+                    { text: "\\( \pi \int_{0}^{4} (\sqrt{y})^2 dy \\)", note: "Trap: This revolves the region about the y-axis." }
+                ],
+                correct: 0
+            },
+            {
+                q: "If \\( f(x) = \arctan(3x) \\), then \\( f'(x) = \\)?",
+                options: [
+                    { text: "\\( \frac{1}{1+9x^2} \\)", note: "Trap: You forgot the chain rule factor of 3." },
+                    { text: "\\( \frac{3}{1+9x^2} \\)", note: "Correct: Using chain rule, \\( \frac{1}{1+(3x)^2} \cdot 3 = \frac{3}{1+9x^2} \\)." },
+                    { text: "\\( \frac{3}{1+3x^2} \\)", note: "Trap: You forgot to square the entire inner term \\( (3x) \\)." },
+                    { text: "\\( \frac{3}{\sqrt{1-9x^2}} \\)", note: "Trap: Used the derivative formula for arcsine instead of arctangent." }
+                ],
+                correct: 1
+            },
+            {
+                q: "A function \\( f \\) satisfies \\( f(2) = 10 \\) and \\( f'(x) = x^2 + 1 \\). Find \\( f(3) \\).",
+                options: [
+                    { text: "52/3", note: "Correct: \\( f(3) = f(2) + \int_{2}^{3} (x^2+1) dx = 10 + [x^3/3 + x]_{2}^{3} = 10 + (9+3) - (8/3+2) = 10 + 12 - 14/3 = 22 - 4.66... = 52/3 \\)." },
+                    { text: "10", note: "Trap: You likely assumed the function value didn't change." },
+                    { text: "22", note: "Trap: You forgot to subtract the lower bound of the integral correctly." },
+                    { text: "12", note: "Trap: Calculation error in the integration process." }
+                ],
+                correct: 0
+            },
+            {
+                q: "The limit \\( \lim_{x \\to \infty} \frac{5x^3 - 2x + 1}{2x^3 + 7} \\) is:",
+                options: [
+                    { text: "0", note: "Trap: You likely thought the denominator grew faster than the numerator." },
+                    { text: "Infinity", note: "Trap: You likely thought the numerator grew faster than the denominator." },
+                    { text: "5/2", note: "Correct: For rational functions at infinity, compare the coefficients of the highest power when the degrees are equal." },
+                    { text: "5/7", note: "Trap: Incorrectly compared the leading coefficient with the constant term." }
+                ],
+                correct: 2
+            },
+            {
+                q: "If \\( f(x) = \ln(x^2+4) \\), find the slope of the tangent at \\( x=2 \\).",
+                options: [
+                    { text: "1/2", note: "Correct: \\( f'(x) = \frac{2x}{x^2+4} \\). At \\( x=2 \\), \\( f'(2) = 4/8 = 1/2 \\)." },
+                    { text: "1/8", note: "Trap: You forgot the chain rule factor of \\( 2x \\) in the numerator." },
+                    { text: "1/4", note: "Trap: Calculation error in evaluating the denominator." },
+                    { text: "2", note: "Trap: Conceptual error in differentiating the natural log." }
+                ],
+                correct: 0
+            },
+            {
+                q: "According to the Mean Value Theorem, if \\( f(x) = x^2 \\) on \\( [0, 4] \\), at what value \\( c \\) is \\( f'(c) \\) equal to the average rate of change?",
+                options: [
+                    { text: "2", note: "Correct: Avg Rate = \\( (16-0)/(4-0) = 4 \\). Set \\( f'(c) = 2c = 4 \\), so \\( c=2 \\)." },
+                    { text: "4", note: "Trap: You confused the average rate of change with the interval endpoint." },
+                    { text: "1", note: "Trap: Calculation error in solving for \\( c \\)." },
+                    { text: "0", note: "Trap: Used the starting point of the interval incorrectly." }
+                ],
+                correct: 0
+            },
+            {
+                q: "Find \\( \int x e^{x^2} dx \\).",
+                options: [
+                    { text: "\\( e^{x^2} + C \\)", note: "Trap: You forgot the factor of 1/2 from the substitution." },
+                    { text: "\\( 2e^{x^2} + C \\)", note: "Trap: You multiplied by 2 instead of dividing during integration." },
+                    { text: "\\( \frac{1}{2} e^{x^2} + C \\)", note: "Correct: Use u-substitution with \\( u = x^2 \\) and \\( du = 2x dx \\)." },
+                    { text: "\\( x^2 e^{x^2} + C \\)", note: "Trap: Improper application of integration by parts or substitution." }
+                ],
+                correct: 2
+            },
+            {
+                q: "Which of the following describes the concavity of \\( f(x) = e^{-x} \\)?",
+                options: [
+                    { text: "Always concave up", note: "Correct: \\( f'(x) = -e^{-x} \\), \\( f''(x) = e^{-x} \\). Since \\( e^{-x} \\) is always positive, it is always concave up." },
+                    { text: "Always concave down", note: "Trap: You likely assumed the negative exponent implied a negative second derivative." },
+                    { text: "Concave up for \\( x < 0 \\) only", note: "Trap: Confused sign change at origin." },
+                    { text: "Changes concavity at \\( x=0 \\)", note: "Trap: Incorrectly identified an inflection point." }
+                ],
+                correct: 0
+            },
+            {
+                q: "Find the limit \\( \lim_{x \\to 1} \frac{\ln(x)}{x-1} \\).",
+                options: [
+                    { text: "0", note: "Trap: You evaluated \\( \ln(1) \\) but did not resolve the limit." },
+                    { text: "e", note: "Trap: Confused the limit with the definition of the number e." },
+                    { text: "1", note: "Correct: This is the definition of the derivative of \\( \ln(x) \\) at \\( x=1 \\), which is \\( 1/1 = 1 \\). Alternatively, use L'Hopital's." },
+                    { text: "Undefined", note: "Trap: Indeterminate form 0/0 is not undefined." }
+                ],
+                correct: 2
             }
-            // Logic for the remaining 41 questions follows this pattern...
-            // Note: To keep code readable, I have provided the logic to handle 45.
         ];
 
-        // ADDING 41 PLACEHOLDERS TO REACH 45 (You can fill these with the text from your PDF)
-        for(let i=4; i<45; i++) {
-            questionData.push({
-                q: `[Question ${i+1}]: This is a placeholder for an AP Calculus concept. To reach 45 questions, you would paste Question ${i+1} from the 2017 Exam PDF here.`,
-                options: [
-                    { text: "Choice A (Correct)", note: "Analysis of why A is correct." },
-                    { text: "Choice B (Trap)", note: "Common student error explanation." },
-                    { text: "Choice C (Trap)", note: "Alternative error explanation." },
-                    { text: "Choice D (Trap)", note: "Calculation error explanation." }
-                ],
-                correct: 0
-            });
-        }
+        let idx = 0;
+        let score = 0;
+        let answered = new Array(20).fill(null);
 
-        let currentIdx = 0;
-        let userAnswers = new Array(45).fill(null);
-        let currentScore = 0;
-
-        const qContent = document.getElementById('question-content');
+        const qText = document.getElementById('q-text');
         const oStack = document.getElementById('options-stack');
         const fBox = document.getElementById('feedback-box');
-        const scorePill = document.getElementById('score-pill');
-        const progText = document.getElementById('progress-text');
+        const scoreText = document.getElementById('score');
+        const navInfo = document.getElementById('nav-info');
 
-        function render() {
-            const data = questionData[currentIdx];
-            progText.innerText = `Question ${currentIdx + 1} / 45`;
-            qContent.innerHTML = data.q;
+        function load() {
+            const data = questionData[idx];
+            navInfo.innerText = `Question ${idx + 1} of 20`;
+            qText.innerHTML = data.q;
             oStack.innerHTML = '';
             fBox.classList.add('hidden');
 
             data.options.forEach((opt, i) => {
-                const btn = document.createElement('button');
-                btn.className = "option-btn math-text";
-                btn.innerHTML = `<span class="w-8 h-8 flex items-center justify-center rounded-full bg-slate-100 text-slate-500 text-xs font-bold mr-4">${String.fromCharCode(65+i)}</span> <span>${opt.text}</span>`;
+                const b = document.createElement('button');
+                b.className = "opt-btn math-text";
+                b.innerHTML = `<span class="w-8 h-8 rounded-full bg-slate-100 text-slate-500 flex items-center justify-center mr-4 text-sm font-bold">${String.fromCharCode(65+i)}</span> ${opt.text}`;
                 
-                if (userAnswers[currentIdx] !== null) {
-                    btn.disabled = true;
-                    if (i === data.correct) btn.classList.add('correct');
-                    if (i === userAnswers[currentIdx] && i !== data.correct) btn.classList.add('incorrect');
+                if (answered[idx] !== null) {
+                    b.disabled = true;
+                    if (i === data.correct) b.classList.add('correct');
+                    if (i === answered[idx] && i !== data.correct) b.classList.add('incorrect');
                 } else {
-                    btn.onclick = () => select(i);
+                    b.onclick = () => select(i);
                 }
-                oStack.appendChild(btn);
+                oStack.appendChild(b);
             });
 
-            if (userAnswers[currentIdx] !== null) showFeedback();
+            if (answered[idx] !== null) showFeed();
             MathJax.typesetPromise();
         }
 
-        function select(idx) {
-            userAnswers[currentIdx] = idx;
-            if (idx === questionData[currentIdx].correct) currentScore++;
-            scorePill.innerText = `Score: ${currentScore}/45`;
-            render();
+        function select(i) {
+            answered[idx] = i;
+            if (i === questionData[idx].correct) score++;
+            scoreText.innerText = `Score: ${score}/20`;
+            load();
         }
 
-        function showFeedback() {
-            const data = questionData[currentIdx];
-            const choice = userAnswers[currentIdx];
+        function showFeed() {
             fBox.classList.remove('hidden');
-            const isCorrect = choice === data.correct;
-            
-            fBox.className = isCorrect ? "rounded-xl p-6 mb-8 border-l-4 border-green-500 bg-green-50 text-green-800" : "rounded-xl p-6 mb-8 border-l-4 border-red-500 bg-red-50 text-red-800";
-            document.getElementById('feedback-status').innerText = isCorrect ? "Correct" : "Trap Detected";
-            document.getElementById('explanation-text').innerHTML = data.options[choice].note;
+            const isCorr = answered[idx] === questionData[idx].correct;
+            fBox.className = isCorr ? "rounded-xl p-6 mb-8 border-l-4 border-green-500 bg-green-50 text-green-800" : "rounded-xl p-6 mb-8 border-l-4 border-red-500 bg-red-50 text-red-800";
+            document.getElementById('status').innerText = isCorr ? "Correct" : "Analysis";
+            document.getElementById('explanation').innerHTML = questionData[idx].options[answered[idx]].note;
         }
 
-        document.getElementById('next-btn').onclick = () => { if(currentIdx < 44) { currentIdx++; render(); } };
-        document.getElementById('prev-btn').onclick = () => { if(currentIdx > 0) { currentIdx--; render(); } };
+        document.getElementById('next').onclick = () => { if(idx < 19) { idx++; load(); } };
+        document.getElementById('prev').onclick = () => { if(idx > 0) { idx--; load(); } };
 
-        render();
+        load();
     </script>
 </body>
 </html>
